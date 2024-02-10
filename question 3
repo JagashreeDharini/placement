@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+
+void printNumber(int num);
+
+int main() {
+    int input;
+    
+    printf("Enter a number: ");
+    scanf("%d", &input);
+ 
+    printNumber(input);
+    
+    return 0;
+}
+
+
+void printNumber(int num) {
+    if (num == 0) {
+        printf("zero");
+        return;
+    }
+
+  
+    const char *ones[] = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    const char *teens[] = {"", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+    const char *tens[] = {"", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+    const char *thousands[] = {"", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"};
+
+    
+    int current, next;
+    int place = 0;
+
+    while (num > 0) {
+        current = num % 1000;
+        num /= 1000;
+        next = num % 1000;
+
+        if (current != 0) {
+            if (current >= 100) {
+                printf("%s hundred ", ones[current / 100]);
+                current %= 100;
+            }
+
+            if (current >= 11 && current <= 19) {
+                printf("%s ", teens[current - 10]);
+            } else {
+                printf("%s ", tens[current / 10]);
+                printf("%s ", ones[current % 10]);
+            }
+
+            if (place > 0) {
+                printf("%s ", thousands[place]);
+            }
+        }
+
+        place++;
+        num = next;
+    }
+}
